@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Client socket -->
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+      body {
+          padding-top: 20px;
+      }
+      /* #message_box {
+        display: block;
+        height: 100 px;
+        /* background-color: #c2f542; */
+        /* overflow: scroll; */
+        border-style: solid;
+        /* border-color: darkgreen; */
+      } */
+      /* #messages {
+        white-space: pre;
+      } */
+    </style>
+    <script>
+      // Client socket - soket name is socket (서버 소켓 이름하고 헷깔리지 말것!)
+      // on: input from server
+      // emit: output to server
+      var socket = io();
+
+      socket.on('onloading', (data) => {
+        console.log(data);
+      });
+
+      socket.on('routerEmit', (data) => {
+        console.log(data)
+      });
+      
+      // socket.on('newchange', function (data) {
+
+      //   // Test for showing new message - new_val & old_val
+      //   var messages = document.querySelector('#messages');
+      //   var new_data = JSON.stringify(data, null, 3);
+      //   var message = '<b>' + new_data + '</b>';
+      //   messages.innerHTML = message;
+        
+      // });
+    </script>
+  </head>
+  <body class="bg-info">
+  <!--/**
+    <h3>Change List</h3>
+    <div id="message_box">
+      <p id="messages"></p>
+    </div>
+**/ -->
+    <h1><%= title %></h1>
+ 
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'Allcase')">ALL Cases</button>
+      <button class="tablinks" onclick="openTab(event, 'Premium')">Premium</button>
+      <button class="tablinks" onclick="openTab(event, 'P1P2')">P1P2</button>
+      <button class="tablinks" onclick="openTab(event, 'P3P4')">Aged P3P4</button>
+      <button class="tablinks" onclick="openTab(event, 'Desktop')">Desktop</button>
+      <button class="tablinks" onclick="openTab(event, 'Server')">Server</button>
+    </div> 
+    
+    
+    <!-- <div>
+      <table id="mydatatable">
+
+      </table>
+    </div> -->
+
+
+    <div id ="Allcase" class="tabcontent">
+        <!-- <div class="ZipDatatable"> -->
+            <!-- <table id="ZipcodesTable" class="table table-bordered table-sm"> -->
+            <table id="ZipcodesTable" class="table table-borded table-hover table-light ">
+            </table>
+        <!-- </div> -->
+    </div>
+  </body>
+
+  <div id ="Premium" class="tabcontent">
+    <p>Premium</p>
+  </div>
+
+</body>
+
+<script>
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>
+
+  <script>
+    window.setInterval('refresh()', 10000);
+    function refresh() {
+      window.location.reload()
+    }
+  </script>
+
+
+  <script>
+    /*
+    console.log("test");
+    console.log('<%= title %>');
+    */
+    var dataSet = <%- JSON.stringify(userData) %>;
+    
+    // $(document).ready(function () {
+      var dt = $('#ZipcodesTable').DataTable({
+      "paging": true,
+      "pageLength": 50,
+      "data": dataSet,
+      columns : [
+        { title: "Engineers", data: "case_owner_name__c" },
+        { title: "Case #", data: "casenumber" },
+        { title: "Esclt", data: "isescalated" },
+        { title: "Pri", data: "priority" },
+        { title: "Age", data: "case_age__c" },
+        { title: "Entitlement", data: "entitlement_type__c" },
+        { title: "FR", data: "first_response_complete__c" },
+        { title: "Language", data: "preferred_case_language__c" },
+        { title: "TimeZone", data: "case_preferred_timezone__c" },
+        { title: "Product", data: "product__c" },
+        { title: "Category", data: "category__c" },
+        { title: "Subject", data: "subject" },
+        { title: "Account", data: "name", "defaultContent": "" }
+      ]
+      })
+      // dt.draw();
+    // });
+  </script>
+
+</html>
+
+
+
+
