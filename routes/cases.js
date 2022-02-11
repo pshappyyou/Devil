@@ -17,13 +17,13 @@ router.get('/', function(req, res, next) {
     // Just like app.js emit when connection occurs
     res.io.on('connection', (client) => {
         res.io.sockets.emit('onloading', 'Hey new commer!!');
-        res.io.sockets.emit('test_emit', 'emit from where?')
+        // res.io.sockets.emit('test_emit', 'emit from where?')
     });
     
     // Rethink DB result
     p.then(function(conn) {
         
-        r.table('table1').run(conn).then(function (cursor) {
+        r.table('TBLAllcase').run(conn).then(function (cursor) {
             return cursor.toArray();
         }).then(function(results){            
             res.render('cases', {title: 'Case List', userData: results});

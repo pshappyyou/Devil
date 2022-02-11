@@ -79,7 +79,8 @@
     <div id ="Allcase" class="tabcontent">
         <!-- <div class="ZipDatatable"> -->
             <!-- <table id="ZipcodesTable" class="table table-bordered table-sm"> -->
-            <table id="ZipcodesTable" class="table table-borded table-hover table-light ">
+            <table id="AllCaseTable" class="table table-borded table-hover table-light ">
+
             </table>
         <!-- </div> -->
     </div>
@@ -87,8 +88,9 @@
 
   <div id ="Premium" class="tabcontent">
     <p>Premium</p>
+    <table id="PremiumTable" class="table table-borded table-hover table-light ">
+    </table>
   </div>
-
 </body>
 
 <script>
@@ -107,14 +109,12 @@
   }
   </script>
 
-  <script>
+  <!-- <script>
     window.setInterval('refresh()', 10000);
     function refresh() {
       window.location.reload()
     }
-  </script>
-
-
+  </script> -->
   <script>
     /*
     console.log("test");
@@ -123,9 +123,88 @@
     var dataSet = <%- JSON.stringify(userData) %>;
     
     // $(document).ready(function () {
-      var dt = $('#ZipcodesTable').DataTable({
+      var dt = $('#AllCaseTable').DataTable({
+      "paging": true,
+      "pageLength": 100,
+      searching: false,
+      // scrollCollapse: true,
+      scrollY: true,
+      "data": dataSet,
+      columns : [
+        { title: "Engineers", data: "case_owner_name__c" },
+        { title: "Case #", data: "casenumber" },
+        { title: "VIP", data: "csm" },
+        { title: "Esclt", data: "isescalated" },
+        { title: "Pri", data: "priority" },
+        { title: "Age", data: "case_age__c" },
+        { title: "Entitlement", data: "entitlement_type__c" },
+        { title: "FR", data: "first_response_complete__c" },
+        { title: "Language", data: "preferred_case_language__c" },
+        { title: "TimeZone", data: "case_preferred_timezone__c" },
+        { title: "Product", data: "product__c" },
+        { title: "Category", data: "category__c" },
+        { title: "Subject", data: "subject" },
+        { title: "Account", data: "name", "defaultContent": "" },
+        // { "order": [[3,"desc"]]}
+      ],
+      "order": [[0, "asc"], [6,"asc"],[4,"asc"],[3,"asc"],[4,"desc"]]
+      })
+      // dt.draw();
+    // });
+  </script>
+
+  <!-- <script>
+    /*
+    console.log("test");
+    console.log('<%= title %>');
+    */
+    var dataSet = <%- JSON.stringify(userData) %>;
+    
+    // $(document).ready(function () {
+      var dt = $('#AllCaseTable').DataTable({
       "paging": false,
       // "pageLength": 100,
+      searching: false,
+      // scrollCollapse: true,
+      scrollY: true,
+      "data": dataSet,
+      columns : [
+        { title: "Engineers", data: "case_owner_name__c" },
+        { title: "Case #", data: "casenumber" },
+        { title: "VIP", data: "csm" },
+        { title: "Esclt", data: "isescalated" },
+        { title: "Pri", data: "priority" },
+        { title: "Age", data: "case_age__c" },
+        { title: "Entitlement", data: "entitlement_type__c" },
+        { title: "FR", data: "first_response_complete__c" },
+        { title: "Language", data: "preferred_case_language__c" },
+        { title: "TimeZone", data: "case_preferred_timezone__c" },
+        { title: "Product", data: "product__c" },
+        { title: "Category", data: "category__c" },
+        { title: "Subject", data: "subject" },
+        { title: "Account", data: "name", "defaultContent": "" },
+        // { "order": [[3,"desc"]]}
+      ],
+      "order": [[0, "asc"], [5,"asc"],[3,"asc"],[4,"desc"]]
+      })
+      // dt.draw();
+    // });
+  </script> -->
+
+  <!-- <script>
+    /*
+    console.log("test");
+    console.log('<%= title %>');
+    */
+    var dataSet = <%- JSON.stringify(userData) %>;
+    
+    // $(document).ready(function () {
+      var dt = $('#PremiumTable').DataTable({
+      "paging": false,
+      // "pageLength": 100,
+      searching: false,
+      // scrollCollapse: true,
+      scrollY: true,
       "data": dataSet,
       columns : [
         { title: "Engineers", data: "case_owner_name__c" },
@@ -143,11 +222,13 @@
         { title: "Account", data: "name", "defaultContent": "" },
         // { "order": [[3,"desc"]]}
       ],
-      "order": [[0, "asc"], [5,"asc"]]
-      })
-      // dt.draw();
+      "order": [[0, "asc"], [5,"asc"],[3,"asc"],[4,"desc"]]
+      }) -->
+      <!-- // dt.draw();
     // });
-  </script>
+  </script> -->
+
+
 
 </html>
 

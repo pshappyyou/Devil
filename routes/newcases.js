@@ -12,24 +12,30 @@ router.get('/', function(req, res, next) {
     // Sockets - On/Emit
 
     // Server Side emit.. 
-    res.io.emit("routerEmit", "From Server to Client");
+    // res.io.emit("routerEmit", "From Server to Client");
     
-    // Just like app.js emit when connection occurs
-    res.io.on('connection', (client) => {
-        res.io.sockets.emit('onloading', 'Hey new commer!!');
-        // res.io.sockets.emit('test_emit', 'emit from where?')
-    });
+    // // Just like app.js emit when connection occurs
+    // res.io.on('connection', (client) => {
+    //     res.io.sockets.emit('onloading', 'Hey new commer!!');
+    //     // res.io.sockets.emit('test_emit', 'emit from where?')
+    // });
     
     // Rethink DB result
     p.then(function(conn) {
         
-        r.table('table1').run(conn).then(function (cursor) {
+        r.table('TBLAllCase').run(conn).then(function (cursor) {
             return cursor.toArray();
         }).then(function(results){            
             res.render('newcases', {title: 'Case List', userData: results});
         });
     });
 
+    // const posts = await r.table('TBLALLCase').run(p)
+    //     .then(cursor => cursor.toArray());
+    // res.render('index', {post});
+    // });
+
+    //update module
     // p.then(conn =>{
     //     r.table('table1').changes().run(conn).then(cursor => {
     //         cursor.each((err, data) => {
