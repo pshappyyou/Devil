@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from cmath import exp
 import subprocess
 import json
 import re
@@ -93,9 +94,11 @@ def push2Rethink(result_dict):
     print('Records Size: ' + str(len(new_dict)))
 
     new_df = pd.DataFrame(new_dict)
+    print("new_df")
     print(new_df)
-    exploded = new_df.Account.apply(json.dumps).apply(json.loads).apply(pd.Series, dtype='object').drop(columns='attributes')
-
+    # exploded = new_df.Account.apply(json.dumps).apply(json.loads).apply(pd.Series, dtype='object').drop(columns='attributes')
+    
+    
     df_filtered = new_df.loc[new_df["Case_Owner_Name__c"].isnull() | (new_df["Case_Owner_Name__c"].notnull() & new_df["Histories"].notnull()), [
                             "CaseNumber",
                             "Case_Age__c", 
@@ -109,8 +112,13 @@ def push2Rethink(result_dict):
                             "IsEscalated",
                             "Preferred_Case_Language__c",
                             "Case_Preferred_Timezone__c",
-                            "Subject"
+                            "Subject",
+                            "Account"
     ]]
+
+    exploded = df_filtered.Account.apply(json.dumps).apply(json.loads).apply(pd.Series, dtype='object').drop(columns='attributes')
+    print("exploded :"+ str(len(exploded)) + " " + str(exploded.size))
+    print(exploded)
 
     # df_filtered = new_df.loc[new_df["Case_Owner_Name__c"].isnull() | (new_df["Case_Owner_Name__c"].notnull() & new_df["Histories"].notnull()),[
     #                         "CaseNumber",
@@ -129,7 +137,9 @@ def push2Rethink(result_dict):
     #                     ]]
     # sorting can be done in the code above using "by"
     # print(df_filtered)
-    # print(exploded)
+    print("DF filtered")
+    print(df_filtered)
+    print(exploded)
     # time.sleep(20000)
     new_df_filtered = pd.concat([df_filtered, exploded], axis=1)
     new_df_filtered.columns = new_df_filtered.columns.str.lower()

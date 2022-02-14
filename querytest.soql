@@ -1,0 +1,15 @@
+    SELECT 
+        Id, CaseNumber, Priority, Case_Age__c, Status, Description, Preferred_Case_Language__c, 
+        Case_Preferred_Timezone__c, Tier__c, Category__c, Product__c, Subject, First_Response_Complete__c, 
+        CreatedDate, Entitlement_Type__c, Plan_of_Action_Status__c, Case_Owner_Name__c,
+        IsEscalated, Escalated_Case__c,
+        ClosedDate, IsClosed, isClosedText__c, 
+        AccountId, Account.Name, Account.CSM_Name__c, Account.CSM_Email__c,
+        (SELECT field FROM Histories WHERE CreatedDate=TODAY and field='Owner')
+    FROM Case 
+    WHERE
+        RecordTypeId='012600000000nrwAAA' AND
+        ( (IsClosed=False) OR (IsClosed=True AND ClosedDate=TODAY) ) AND
+        Preferred_Support_Region__c ='APAC' AND 
+        Preferred_Case_Language__c != 'Japanese' AND 
+        Tier__c != 'Admin'
