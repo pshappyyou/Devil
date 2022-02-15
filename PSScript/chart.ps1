@@ -19,8 +19,6 @@ WHERE
     Tier__c != 'Admin'
 ORDER BY Priority,Case_Age__c desc"-replace"`n",""
 
-#TEST COMMENT
-
 <#Functions #>
 functionGet-QueryResult{
     [CmdletBinding()]
