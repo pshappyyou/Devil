@@ -1,0 +1,14 @@
+  <!-- views/index.hbs -->
+    <div class="container-fluid text-center" id="posts-list">
+    
+        {{#each posts }}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ this.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ this.date }}</h6>
+                    <p class="card-text">{{ this.content }}</p>
+                </div>
+            </div>
+        {{/each}}
+    
+    </div>

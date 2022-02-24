@@ -3,10 +3,15 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <!-- Client socket -->
     <script src="/socket.io/socket.io.js"></script>
     <style>
@@ -122,35 +127,45 @@
     */
     var dataSet = <%- JSON.stringify(userData) %>;
     
-    // $(document).ready(function () {
-      var dt = $('#AllCaseTable').DataTable({
-      "paging": true,
-      "pageLength": 100,
-      searching: false,
-      // scrollCollapse: true,
-      scrollY: true,
-      "data": dataSet,
-      columns : [
-        { title: "Engineers", data: "case_owner_name__c" },
-        { title: "Case #", data: "casenumber" },
-        { title: "VIP", data: "csm" },
-        { title: "Esclt", data: "isescalated" },
-        { title: "Pri", data: "priority" },
-        { title: "Age", data: "case_age__c" },
-        { title: "Entitlement", data: "entitlement_type__c" },
-        { title: "FR", data: "first_response_complete__c" },
-        { title: "Language", data: "preferred_case_language__c" },
-        { title: "TimeZone", data: "case_preferred_timezone__c" },
-        { title: "Product", data: "product__c" },
-        { title: "Category", data: "category__c" },
-        { title: "Subject", data: "subject" },
-        { title: "Account", data: "name", "defaultContent": "" },
-        // { "order": [[3,"desc"]]}
-      ],
-      "order": [[0, "asc"], [6,"asc"],[4,"asc"],[3,"asc"],[4,"desc"]]
-      })
-      // dt.draw();
-    // });
+    $(document).ready(function () {
+        var dt = $('#AllCaseTable').DataTable({
+        "paging": true,
+        "pageLength": 100,
+        fixedHeader :{
+          header: true
+        },
+        "autoWidth" : false,
+        searching: false,
+        // scrollCollapse: true,
+        scrollY: true,
+        "data": dataSet,
+        columns : [
+          {data: "id", visible:false},
+          { title: "Engineers", data: "case_owner_name__c" },
+          { title: "Case #", data: "casenumber", "render": function(data, type, row, meta){
+              if(type === 'display'){
+                  data = '<a href="https://tableau.my.salesforce.com/' + row.id + '"target="_blank">' + data + '</a>';
+              }
+              return data;
+          } },
+          { title: "VIP", data: "csm" },
+          { title: "Esclt", data: "isescalated" },
+          { title: "Pri", data: "priority" },
+          { title: "Age", data: "case_age__c" },
+          { title: "Entitlement", data: "entitlement_type__c" },
+          { title: "FR", data: "first_response_complete__c" },
+          { title: "Language", data: "preferred_case_language__c" },
+          { title: "TimeZone", data: "case_preferred_timezone__c" },
+          { title: "Product", data: "product__c" },
+          { title: "Category", data: "category__c" },
+          { title: "Subject", data: "subject" },
+          { title: "Account", data: "name", "defaultContent": "" },
+          // { "order": [[3,"desc"]]}
+        ],
+        "order": [[1, "asc"], [7,"asc"],[5,"asc"],[4,"asc"],[5,"desc"]]
+        })
+        // dt.draw();
+    });
 
     // forEach(rows in dataTable) {
       

@@ -1,0 +1,8 @@
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): login.salesforce.com:443
+DEBUG:urllib3.connectionpool:https://login.salesforce.com:443 "POST /services/Soap/u/52.0 HTTP/1.1" 500 665
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): login.salesforce.com:443
+DEBUG:urllib3.connectionpool:https://login.salesforce.com:443 "POST /services/Soap/u/52.0 HTTP/1.1" 500 665
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): login.salesforce.com:443
+DEBUG:urllib3.connectionpool:https://login.salesforce.com:443 "POST /services/Soap/u/52.0 HTTP/1.1" 500 665
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): login.salesforce.com:443
+DEBUG:urllib3.connectionpool:https://login.salesforce.com:443 "POST /services/Soap/u/52.0 HTTP/1.1" 500 665

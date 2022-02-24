@@ -1,0 +1,36 @@
+    // routes/index.js
+    const router = require('express').Router();
+    const r = require('rethinkdb');
+    
+    let connection;
+    r.connect({host: '10.108.8.108', port: 28015, db: 'TBLAllCASE'})
+        .then(conn => {
+          connection = conn;
+        });
+    
+    /* Render the feed. */
+    router.get('/', async (req, res, next) => {
+      const posts = await r.table('posts').orderBy(r.desc('date')).run(connection)
+          .then(cursor => cursor.toArray());
+      res.render('index', { posts });
+    });
+    
+    // routes/index.js
+    
+    /* Show the view to create a new post. */
+    router.get('/new', (req, res, next) => {
+      res.render('new');
+    });
+    
+    /* Save a new post to the database */
+    router.post('/new', async (req, res, next) => {
+        const post = {
+            title: req.body.title,
+            content: req.body.content,
+            date: new Date(),
+        };
+      r.table('posts').insert(post).run(connection)
+          .then(() => res.redirect('/'));
+    });
+    
+    module.exports = router;

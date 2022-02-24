@@ -100,6 +100,7 @@ def push2Rethink(result_dict):
     
     
     df_filtered = new_df.loc[new_df["Case_Owner_Name__c"].isnull() | (new_df["Case_Owner_Name__c"].notnull() & new_df["Histories"].notnull()), [
+                            "Id",
                             "CaseNumber",
                             "Case_Age__c", 
                             "Status", 
@@ -137,13 +138,13 @@ def push2Rethink(result_dict):
     #                     ]]
     # sorting can be done in the code above using "by"
     # print(df_filtered)
-    print("DF filtered")
-    print(df_filtered)
-    print(exploded)
+    # print("DF filtered")
+    # print(df_filtered)
+    # print(exploded)
     # time.sleep(20000)
     new_df_filtered = pd.concat([df_filtered, exploded], axis=1)
     new_df_filtered.columns = new_df_filtered.columns.str.lower()
-    new_df_filtered["id"] = new_df_filtered['casenumber']
+    # new_df_filtered["id"] = new_df_filtered['casenumber']
 
     # new_df_filtered["CSM"] =""
     # print(new_df_filtered)
